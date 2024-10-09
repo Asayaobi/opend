@@ -128,3 +128,24 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Added for Motoko and React
+
+# React build files
+build/
+dist/
+
+# Ignore Vite cache (if used in React project)
+.vite/
+
+# Local environment files (for IC and Motoko)
+dfx.json
+dfx_generated/
+
+# Ignore Mac system files
+*.DS_Store
+
+# Ignore Motoko build artifacts
+.mops/
+.mo-build/
+.mo-pkg/
