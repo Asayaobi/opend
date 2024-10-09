@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react"
 import logo from "../../assets/logo.png"
 import { Actor, HttpAgent } from "@dfinity/agent"
 import {idlFactory} from "../../../declarations/nft"
-import { canisterId } from "../../../declarations/nft/index"
+import { canisterId, createActor } from "../../../declarations/nft/index"
 import {Principal} from "@dfinity/principal"
 
 function Item(props) {
 
   const[name, setName]= useState()
   const[owner, setOwner] = useState()
+  const[image, setImage] = useState()
 
   //convert props to principal type
   const id = Principal.fromText(props.id)
@@ -21,7 +22,7 @@ function Item(props) {
       agent,
       canisterId: id,
     })
-    //call any functions from nft.mo
+    //call functions from nft.mo
     const name = await NFTActor.getName()
     setName(name)
 
@@ -29,6 +30,15 @@ function Item(props) {
     //convert Principal format to text
     const ownerText= ownerPrincipal.toText()
     setOwner(ownerText)
+
+    const imageData = await NFTActor.getAsset()
+    //convert the [NAT8] data into Uint8Array
+    const imageContent = new Uint8Array(imageData)
+    //turn it into the url
+    const image = URL.createObjectURL(
+      new Blob([imageContent.buffer], {type: "image/png"})
+    )
+    setImage(image)
   }
 
   //call loadNFT function once when the page loads
@@ -42,7 +52,7 @@ function Item(props) {
         {/* image */}
         <img
           className="disCardMedia-root makeStyles-image-19 disCardMedia-media disCardMedia-img"
-          src={logo}
+          src={image}
         />
         <div className="disCardContent-root">
         {/* name */}
