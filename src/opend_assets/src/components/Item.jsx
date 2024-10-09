@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import logo from "../../assets/logo.png"
 import { Actor, HttpAgent } from "@dfinity/agent"
 import {idlFactory} from "../../../declarations/nft"
@@ -6,6 +6,9 @@ import { canisterId } from "../../../declarations/nft/index"
 import {Principal} from "@dfinity/principal"
 
 function Item(props) {
+
+  const[name, setName]= useState()
+  
   //convert props to principal type
   const id = Principal.fromText(props.id)
 
@@ -17,6 +20,9 @@ function Item(props) {
       agent,
       canisterId: id,
     })
+    //call any functions from nft.mo
+    const name = await NFTActor.getName()
+    setName(name)
   }
 
   //call loadNFT function once when the page loads
@@ -35,7 +41,7 @@ function Item(props) {
         <div className="disCardContent-root">
         {/* name */}
           <h2 className="disTypography-root makeStyles-bodyText-24 disTypography-h5 disTypography-gutterBottom">
-            CryptoDunks #312<span className="purple-text"></span>
+            {name}<span className="purple-text"></span>
           </h2>
         {/* owner */}
           <p className="disTypography-root makeStyles-bodyText-24 disTypography-body2 disTypography-colorTextSecondary">
