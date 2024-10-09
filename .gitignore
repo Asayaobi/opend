@@ -142,6 +142,9 @@ dist/
 dfx.json
 dfx_generated/
 
+# Ignore DFX state
+.dfx/
+
 # Ignore Mac system files
 *.DS_Store
 
