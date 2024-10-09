@@ -8,7 +8,8 @@ import {Principal} from "@dfinity/principal"
 function Item(props) {
 
   const[name, setName]= useState()
-  
+  const[owner, setOwner] = useState()
+
   //convert props to principal type
   const id = Principal.fromText(props.id)
 
@@ -23,6 +24,11 @@ function Item(props) {
     //call any functions from nft.mo
     const name = await NFTActor.getName()
     setName(name)
+
+    const ownerPrincipal = await NFTActor.getOwner()
+    //convert Principal format to text
+    const ownerText= ownerPrincipal.toText()
+    setOwner(ownerText)
   }
 
   //call loadNFT function once when the page loads
@@ -45,7 +51,7 @@ function Item(props) {
           </h2>
         {/* owner */}
           <p className="disTypography-root makeStyles-bodyText-24 disTypography-body2 disTypography-colorTextSecondary">
-            Owner: sdfsdf-erwerv-sdf
+            Owner: {owner}
           </p>
         </div>
       </div>
