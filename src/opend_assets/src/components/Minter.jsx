@@ -6,7 +6,11 @@ function Minter() {
 
   // for passing in the data
   async function onSubmit(data){
-    console.log(data.image)
+    const name = data.name
+    const image = data.image[0]
+    //for passing the data type content : [Nat8]
+    const imageArray = await image.arrayBuffer()
+    const imageByteData = [...new Uint8Array(imageArray)]
   }
   return (
     <div className="minter-container">
