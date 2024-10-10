@@ -1,10 +1,12 @@
-import React from "react"
+import React, {useState} from "react"
 import { useForm } from "react-hook-form"
 import { opend } from "../../../declarations/opend"
 import { Principal } from "@dfinity/principal"
+import Item from "./Item"
 
 function Minter() {
   const {register, handleSubmit} = useForm()
+  const [nftPrincipal, setnftPrincipal] = useState("")
 
   // for passing in the data
   async function onSubmit(data){
@@ -17,7 +19,10 @@ function Minter() {
     const newNFTID = await opend.mint(imageByteData, name)
     //convert newNFTID Principal type to text
     console.log(newNFTID.toText())
+    setnftPrincipal(newNFTID)
   }
+
+  if (nftPrincipal == "") {
   return (
     <div className="minter-container">
       <h3 className="makeStyles-title-99 Typography-h3 form-Typography-gutterBottom">
@@ -57,6 +62,18 @@ function Minter() {
       </form>
     </div>
   )
+  } else { 
+    return (
+    <div className="minter-container">
+          <h3 className="Typography-root makeStyles-title-99 Typography-h3 form-Typography-gutterBottom">
+            Minted!
+          </h3>
+          <div className="horizontal-center">
+            <Item id={nftPrincipal.toText()}/>
+          </div>
+        </div>
+  )
+  }
 }
 
 export default Minter
