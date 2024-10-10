@@ -7,9 +7,11 @@ import Item from "./Item"
 function Minter() {
   const {register, handleSubmit} = useForm()
   const [nftPrincipal, setnftPrincipal] = useState("")
+  const [loaderHidden, setloaderHidden] = useState(true)
 
   // for passing in the data
   async function onSubmit(data){
+    setloaderHidden(false)
     const name = data.name
     const image = data.image[0]
     //for passing the data type content : [Nat8]
@@ -20,11 +22,19 @@ function Minter() {
     //convert newNFTID Principal type to text
     console.log(newNFTID.toText())
     setnftPrincipal(newNFTID)
+    setloaderHidden(true)
   }
 
   if (nftPrincipal == "") {
   return (
     <div className="minter-container">
+      {/* loader */}
+      <div hidden={loaderHidden} className="lds-ellipsis">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
       <h3 className="makeStyles-title-99 Typography-h3 form-Typography-gutterBottom">
         Create NFT
       </h3>
