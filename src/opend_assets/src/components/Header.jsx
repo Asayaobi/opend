@@ -1,12 +1,23 @@
-import React from "react"
+import React, { useEffect } from "react"
 import logo from "../../assets/logo.png"
 import { BrowserRouter, Link, Switch, Route} from "react-router-dom"
 import homeImage from "../../assets/home-img.png"
 import Minter from "./Minter"
 import Gallery from "./Gallery"
-
+import { opend } from "../../../declarations/opend"
+import CURRENT_USER_ID from "../index"
 
 function Header() {
+  //get data from the backend
+  async function getNFTs(){
+    const userNFTIds = await opend.getOwnedNFTs(CURRENT_USER_ID)
+    console.log(userNFTIds)
+  }
+  //call it when the page loads
+  useEffect(()=> {
+    getNFTs()
+  },[])
+
   return (
     <BrowserRouter>
     <div className="app-root-1">
