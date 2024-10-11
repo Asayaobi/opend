@@ -3,11 +3,13 @@ import NFTActorClass "../NFT/nft";
 import Cycles "mo:base/ExperimentalCycles";
 import Debug "mo:base/Debug";
 import HashMap "mo:base/HashMap";
+import List "mo:base/List";
 
 actor OpenD { 
     
-// 1.create map of NFTs
-var mapOfNFTs = HashMap.HashMap<Principal, NFTActorClass.NFT>(1, Principal.equal,Principal.hash);
+//1. create map of NFTs and map of Owner
+var mapOfNFTs = HashMap.HashMap<Principal, NFTActorClass.NFT>(1, Principal.equal, Principal.hash);
+var mapOfOwners = HashMap.HashMap<Principal, List.List<Principal>>(1, Principal.equal, Principal.hash);
 
     public shared(msg) func mint(imgData: [Nat8], name: Text) : async Principal {
         let owner : Principal = msg.caller;
@@ -18,10 +20,22 @@ var mapOfNFTs = HashMap.HashMap<Principal, NFTActorClass.NFT>(1, Principal.equal
         let newNFT = await NFTActorClass.NFT(name, owner, imgData);
         Debug.print(debug_show (Cycles.balance()));
 
-//2.everytime you create new NFT, push it to the map
+//2. everytime you create new NFT, push it to the map
         let newNFTPrincipal = await newNFT.getCanisterId();
         mapOfNFTs.put(newNFTPrincipal, newNFT);
+        addToOwnershipMap(owner, newNFTPrincipal);
 
         return newNFTPrincipal
+    };
+
+    //to add newly created NFT to mapOfOwners
+    private func addToOwnershipMap(owner: Principal, nftId: Principal) {
+        var ownedNFTs : List.List<Principal> = switch (mapOfOwners.get(owner)){
+            case null List.nil<Principal>();
+            case (?result) result;
+        };
+
+        ownedNFTs := List.push(nftId, ownedNFTs);
+        mapOfOwners.put(owner, ownedNFTs);
     }
 };
