@@ -37,5 +37,15 @@ var mapOfOwners = HashMap.HashMap<Principal, List.List<Principal>>(1, Principal.
 
         ownedNFTs := List.push(nftId, ownedNFTs);
         mapOfOwners.put(owner, ownedNFTs);
+    };
+
+   //3.fetch data to be used on react frontend 
+   public query func getOwnedNFTs(user: Principal) : async [Principal] {
+        //retrieve the list of NFT principals owned by a single user from the mapOfOwners
+        var userNFTs : List.List<Principal> = switch (mapOfOwners.get(user)) {
+            case null List.nil<Principal>();
+            case (?result) result
+        };
+        return List.toArray(userNFTs);
     }
 };
