@@ -15,7 +15,9 @@ function Header() {
           <div className="header-left-4"></div>
           <img className="header-logo-11" src={logo} />
           <div className="header-vertical-9"></div>
-          <h5 className="Typography-root header-logo-text">OpenD</h5>
+            <Link to ="/">
+              <h5 className="Typography-root header-logo-text">OpenD</h5>
+            </Link>
           <div className="header-empty-6"></div>
           <div className="header-space-8"></div>
           <button className="ButtonBase-root Button-root Button-text header-navButtons-3">
