@@ -12,6 +12,7 @@ function Item(props) {
   const[owner, setOwner] = useState()
   const[image, setImage] = useState()
   const [button, setButton] = useState()
+  const [priceInput, setPriceInput] = useState()
 
   //convert props to principal type
   // const id = Principal.fromText(props.id)
@@ -51,8 +52,18 @@ function Item(props) {
     loadNFT()
   }, [])
 
+  let price
   function handleSell(){
-    console.log('sell clicked')
+    // console.log('sell clicked')
+    return (
+      <input
+        placeholder="Price in DENG"
+        type="number"
+        className="price-input"
+        value={price}
+        onChange={(e)=> price = e.target.value}
+      />
+    )
   }
   return (
     <div className="disGrid-item">
