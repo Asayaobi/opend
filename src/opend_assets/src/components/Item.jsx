@@ -64,7 +64,11 @@ function Item(props) {
         onChange={(e)=> price = e.target.value}
       />
     )
-    setButton(<Button handleClick={handleSell} text="Confirm"/>)
+    setButton(<Button handleClick={sellItem} text="Confirm"/>)
+  }
+
+  async function sellItem() {
+    console.log(`Sell at ${price} DENG`)
   }
   return (
     <div className="disGrid-item">
