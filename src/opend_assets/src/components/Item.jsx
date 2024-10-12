@@ -4,12 +4,14 @@ import { Actor, HttpAgent } from "@dfinity/agent"
 import {idlFactory} from "../../../declarations/nft"
 import { canisterId, createActor } from "../../../declarations/nft/index"
 import {Principal} from "@dfinity/principal"
+import Button from "./Button"
 
 function Item(props) {
 
   const[name, setName]= useState()
   const[owner, setOwner] = useState()
   const[image, setImage] = useState()
+  const [button, setButton] = useState()
 
   //convert props to principal type
   // const id = Principal.fromText(props.id)
@@ -40,6 +42,8 @@ function Item(props) {
       new Blob([imageContent.buffer], {type: "image/png"})
     )
     setImage(image)
+
+    setButton(<Button handleClick={handleSell}/>)
   }
 
   //call loadNFT function once when the page loads
@@ -47,6 +51,9 @@ function Item(props) {
     loadNFT()
   }, [])
 
+  function handleSell(){
+    console.log('sell clicked')
+  }
   return (
     <div className="disGrid-item">
       <div className="disPaper-root disCard-root makeStyles-root-17 disPaper-elevation1 disPaper-rounded">
@@ -64,6 +71,8 @@ function Item(props) {
           <p className="disTypography-root makeStyles-bodyText-24 disTypography-body2 disTypography-colorTextSecondary">
             Owner: {owner}
           </p>
+          {/* sell button */}
+          {button}
         </div>
       </div>
     </div>
