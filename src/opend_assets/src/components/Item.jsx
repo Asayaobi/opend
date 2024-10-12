@@ -5,6 +5,7 @@ import {idlFactory} from "../../../declarations/nft"
 import { canisterId, createActor } from "../../../declarations/nft/index"
 import {Principal} from "@dfinity/principal"
 import Button from "./Button"
+import { opend } from "../../../declarations/opend"
 
 function Item(props) {
 
@@ -68,7 +69,9 @@ function Item(props) {
   }
 
   async function sellItem() {
-    console.log(`Sell at ${price} DENG`)
+    console.log(`List at ${price} DENG`)
+    const listingResult = await opend.listItem(props.id, price)
+    console.log(`Listing result: ${listingResult}`)
   }
   return (
     <div className="disGrid-item">
