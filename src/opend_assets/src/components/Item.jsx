@@ -70,7 +70,7 @@ function Item(props) {
 
   async function sellItem() {
     console.log(`List at ${price} DENG`)
-    const listingResult = await opend.listItem(props.id, price)
+    const listingResult = await opend.listItem(Principal.fromText(props.id), Number(price))
     console.log(`Listing result: ${listingResult}`)
   }
   return (
