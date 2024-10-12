@@ -21,6 +21,8 @@ function Item(props) {
 
   const localHost = "http://localhost:8080/"
   const agent = new HttpAgent({host: localHost})
+  //When deploy the project live, remove this following line
+  agent.fetchRootKey()
 
   let NFTActor
 
