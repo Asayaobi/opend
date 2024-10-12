@@ -77,5 +77,10 @@ var mapOfListings = HashMap.HashMap<Principal, Listing>(1, Principal.equal, Prin
         } else {
             return "you don't own this NFT"
         }
+    };
+
+    //get the new owner canister ID to pass to Item.jsx
+    public query func getOpenDCanisterID() : async Principal{
+        return Principal.fromActor(OpenD);
     }
 };
