@@ -6,10 +6,15 @@ import HashMap "mo:base/HashMap";
 import List "mo:base/List";
 
 actor OpenD { 
+    private type Listing = {
+        itemOwner: Principal;
+        itemPrice: Nat;
+    };
     
 //1. create map of NFTs and map of Owner
 var mapOfNFTs = HashMap.HashMap<Principal, NFTActorClass.NFT>(1, Principal.equal, Principal.hash);
 var mapOfOwners = HashMap.HashMap<Principal, List.List<Principal>>(1, Principal.equal, Principal.hash);
+var mapOfListings = HashMap.HashMap<Principal, Listing>(1, Principal.equal, Principal.hash);
 
     public shared(msg) func mint(imgData: [Nat8], name: Text) : async Principal {
         let owner : Principal = msg.caller;
@@ -47,5 +52,30 @@ var mapOfOwners = HashMap.HashMap<Principal, List.List<Principal>>(1, Principal.
             case (?result) result
         };
         return List.toArray(userNFTs);
+    };
+
+    //4. for listings
+    public shared(msg) func listItem(id: Principal, price: Nat) : async Text {
+        //get a hold of NFT, since we're not sure if NFT exists, use this switch statement
+        var item : NFTActorClass.NFT = switch (mapOfNFTs.get(id)){
+            case null return "NFT does not exist";
+            //if result exists, return the result
+            case (?result) result;
+        };
+
+        //check the person who is calling this list is the owner of that NFT
+        let owner = await item.getOwner();
+        //if that person is the owner with msg caller id
+        if(Principal.equal(owner,msg.caller)){
+            //create new listing
+            let newListing : Listing = {
+                itemOwner = owner;
+                itemPrice = price;
+            };
+            mapOfListings.put(id, newListing);
+            return "success";
+        } else {
+            return "you don't own this NFT"
+        }
     }
 };
