@@ -44,7 +44,7 @@ function Item(props) {
     )
     setImage(image)
 
-    setButton(<Button handleClick={handleSell}/>)
+    setButton(<Button handleClick={handleSell} text="Sell"/>)
   }
 
   //call loadNFT function once when the page loads
@@ -55,7 +55,7 @@ function Item(props) {
   let price
   function handleSell(){
     // console.log('sell clicked')
-    return (
+    setPriceInput(
       <input
         placeholder="Price in DENG"
         type="number"
@@ -64,6 +64,7 @@ function Item(props) {
         onChange={(e)=> price = e.target.value}
       />
     )
+    setButton(<Button handleClick={handleSell} text="Confirm"/>)
   }
   return (
     <div className="disGrid-item">
@@ -83,6 +84,7 @@ function Item(props) {
             Owner: {owner}
           </p>
           {/* sell button */}
+          {priceInput}
           {button}
         </div>
       </div>
