@@ -16,6 +16,7 @@ function Item(props) {
   const [priceInput, setPriceInput] = useState()
   const [loaderHidden, setLoaderHidden] = useState(true)
   const [blur, setBlur] = useState()
+  const [sellStatus, setSellStatus] = useState("")
 
   //convert props to principal type
   // const id = Principal.fromText(props.id)
@@ -59,6 +60,7 @@ function Item(props) {
       //if it's listed, blur the image and set the owner to OpenD market 
       setOwner("OpenD")
       setBlur({filter: "blur(4px)"})
+      setSellStatus("Listed")
     } else {
       //if it's not listed, then you can sell
       setButton(<Button handleClick={handleSell} text="Sell"/>)
@@ -106,6 +108,7 @@ function Item(props) {
         setPriceInput()
         //instead of display owner as 2vxx-fae, change it to Opend so that the user knows that it has been transfer
         setOwner("OpenD")
+        setSellStatus("Listed")
       }
     }
   }
@@ -128,7 +131,7 @@ function Item(props) {
         <div className="disCardContent-root">
         {/* name */}
           <h2 className="disTypography-root makeStyles-bodyText-24 disTypography-h5 disTypography-gutterBottom">
-            {name}<span className="purple-text"></span>
+            {name}<span className="purple-text"> {sellStatus}</span>
           </h2>
         {/* owner */}
           <p className="disTypography-root makeStyles-bodyText-24 disTypography-body2 disTypography-colorTextSecondary">
