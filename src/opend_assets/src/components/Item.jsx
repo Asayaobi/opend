@@ -15,6 +15,7 @@ function Item(props) {
   const [button, setButton] = useState()
   const [priceInput, setPriceInput] = useState()
   const [loaderHidden, setLoaderHidden] = useState(true)
+  const [blur, setBlur] = useState()
 
   //convert props to principal type
   // const id = Principal.fromText(props.id)
@@ -74,6 +75,7 @@ function Item(props) {
   }
 
   async function sellItem() {
+    setBlur({filter: "blur(4px)"})
     setLoaderHidden(false)
     console.log(`List at ${price} DENG`)
     const listingResult = await opend.listItem(Principal.fromText(props.id), Number(price))
@@ -102,6 +104,7 @@ function Item(props) {
         <img
           className="disCardMedia-root makeStyles-image-19 disCardMedia-media disCardMedia-img"
           src={image}
+          style={blur}
         />
         {/* loader */}
         <div className="lds-ellipsis" hidden={loaderHidden}>
