@@ -85,9 +85,13 @@ function Item(props) {
       const transferResult = await NFTActor.transferOwnership(openDID)
       console.log(`Transfer result: ${transferResult}`)
 
-      //if the transfer is success, hide the loader
+      //if the transfer is success, hide the loader, price input, and confirm button
       if (transferResult == "Success"){
         setLoaderHidden(true)
+        setButton()
+        setPriceInput()
+        //instead of display owner as 2vxx-fae, change it to Opend so that the user knows that it has been transfer
+        setOwner("OpenD")
       }
     }
   }
