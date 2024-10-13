@@ -14,6 +14,7 @@ function Item(props) {
   const[image, setImage] = useState()
   const [button, setButton] = useState()
   const [priceInput, setPriceInput] = useState()
+  const [loaderHidden, setLoaderHidden] = useState(true)
 
   //convert props to principal type
   // const id = Principal.fromText(props.id)
@@ -73,6 +74,7 @@ function Item(props) {
   }
 
   async function sellItem() {
+    setLoaderHidden(false)
     console.log(`List at ${price} DENG`)
     const listingResult = await opend.listItem(Principal.fromText(props.id), Number(price))
     console.log(`Listing result: ${listingResult}`)
@@ -82,6 +84,11 @@ function Item(props) {
       const openDID = await opend.getOpenDCanisterID()
       const transferResult = await NFTActor.transferOwnership(openDID)
       console.log(`Transfer result: ${transferResult}`)
+
+      //if the transfer is success, hide the loader
+      if (transferResult == "Success"){
+        setLoaderHidden(true)
+      }
     }
   }
   return (
@@ -92,6 +99,13 @@ function Item(props) {
           className="disCardMedia-root makeStyles-image-19 disCardMedia-media disCardMedia-img"
           src={image}
         />
+        {/* loader */}
+        <div className="lds-ellipsis" hidden={loaderHidden}>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
         <div className="disCardContent-root">
         {/* name */}
           <h2 className="disTypography-root makeStyles-bodyText-24 disTypography-h5 disTypography-gutterBottom">
