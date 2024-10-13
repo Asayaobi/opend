@@ -52,6 +52,7 @@ function Item(props) {
     setImage(image)
 
     //check if NFT is listed in the ListingMap
+    console.log("props.id:", props.id, typeof props.id)
     const nftIsListed = await opend.isListed(props.id)
     //if it's listed ->  nftIsListed : true
     if (nftIsListed){
@@ -89,7 +90,7 @@ function Item(props) {
     setBlur({filter: "blur(4px)"})
     setLoaderHidden(false)
     console.log(`List at ${price} DENG`)
-    const listingResult = await opend.listItem(Principal.fromText(props.id), Number(price))
+    const listingResult = await opend.listItem(props.id, Number(price))
     console.log(`Listing result: ${listingResult}`)
 
     //if opend.listItem() runs properly, then transfer the NFT owner
