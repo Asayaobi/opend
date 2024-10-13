@@ -82,5 +82,15 @@ var mapOfListings = HashMap.HashMap<Principal, Listing>(1, Principal.equal, Prin
     //get the new owner canister ID to pass to Item.jsx
     public query func getOpenDCanisterID() : async Principal{
         return Principal.fromActor(OpenD);
+    };
+
+    //check if this ID is listed for sell
+    public query func isListed(id: Principal) : async Bool {
+        //if this id is in the Listings map -> true/ if not (nul) -> false
+        if (mapOfListings.get(id) == null){
+            return false;
+        } else {
+            return true;
+        }
     }
 };
