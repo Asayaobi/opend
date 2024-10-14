@@ -78,7 +78,9 @@ function Item(props) {
       if (originalOwner != CURRENT_USER_ID.toText()){
         setButton(<Button handleClick={handleBuy} text="Buy"/>)
       }
-      //priceLabel : check the price of the NFT
+      //getListedNFTPrice : check the price of the NFT from main.mo
+      const price = await opend.getListedNFTPrice(props.id)
+      setPriceLabel(<PriceLabel sellPrice={price.toString()} />)
     }
   }
 
