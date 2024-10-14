@@ -19,6 +19,7 @@ function Item(props) {
   const [loaderHidden, setLoaderHidden] = useState(true)
   const [blur, setBlur] = useState()
   const [sellStatus, setSellStatus] = useState("")
+  const [priceLabel, setPriceLabel] = useState()
 
   //convert props to principal type
   // const id = Principal.fromText(props.id)
@@ -77,6 +78,7 @@ function Item(props) {
       if (originalOwner != CURRENT_USER_ID.toText()){
         setButton(<Button handleClick={handleBuy} text="Buy"/>)
       }
+      //priceLabel : check the price of the NFT
     }
   }
 
@@ -147,7 +149,7 @@ function Item(props) {
       </div>
         <div className="disCardContent-root">
         {/* price */}
-        <PriceLabel />
+        {priceLabel}
         {/* name */}
           <h2 className="disTypography-root makeStyles-bodyText-24 disTypography-h5 disTypography-gutterBottom">
             {name}<span className="purple-text"> {sellStatus}</span>
