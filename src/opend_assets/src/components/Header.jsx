@@ -14,11 +14,11 @@ function Header() {
   async function getNFTs(){
     const userNFTIds = await opend.getOwnedNFTs(CURRENT_USER_ID)
     console.log(userNFTIds)
-    setuserOwnedGallery(<Gallery title="My NFTs" ids={userNFTIds}/>)
+    setuserOwnedGallery(<Gallery title="My NFTs" ids={userNFTIds} role="collection"/>)
 
     const listedNFTIds  = await opend.getListedNFTs()
     console.log("listedNFTIds:", listedNFTIds)
-    setListingGallery(<Gallery title="Discover"ids={listedNFTIds}/>)
+    setListingGallery(<Gallery title="Discover"ids={listedNFTIds} role="discover"/>)
   }
   //call it when the page loads
   useEffect(()=> {
