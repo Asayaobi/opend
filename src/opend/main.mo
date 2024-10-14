@@ -100,5 +100,15 @@ var mapOfListings = HashMap.HashMap<Principal, Listing>(1, Principal.equal, Prin
         } else {
             return true;
         }
-    }
+    };
+
+    //for Item component
+    public query func getOriginalOwner(id: Principal) : async Principal {
+        //if the checking id isn't the original owner, return empty  
+        var listing : Listing = switch (mapOfListings.get(id)) {
+            case null return Principal.fromText("");
+            case (?result) result;
+        };
+        return listing.itemOwner;
+    };
 };
