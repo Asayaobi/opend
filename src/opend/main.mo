@@ -4,6 +4,7 @@ import Cycles "mo:base/ExperimentalCycles";
 import Debug "mo:base/Debug";
 import HashMap "mo:base/HashMap";
 import List "mo:base/List";
+import Iter "mo:base/Iter";
 
 actor OpenD { 
     private type Listing = {
@@ -52,6 +53,13 @@ var mapOfListings = HashMap.HashMap<Principal, Listing>(1, Principal.equal, Prin
             case (?result) result
         };
         return List.toArray(userNFTs);
+    };
+
+        //pass listing item id to Header component
+    public query func getListedNFTs() : async [Principal]{
+        //turn keys to an array using Iter
+        let ids = Iter.toArray(mapOfListings.keys());
+        return ids;
     };
 
     //4. for listings
