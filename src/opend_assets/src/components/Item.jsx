@@ -6,6 +6,7 @@ import { canisterId, createActor } from "../../../declarations/nft/index"
 import {Principal} from "@dfinity/principal"
 import Button from "./Button"
 import { opend } from "../../../declarations/opend"
+import CURRENT_USER_ID from "../index"
 
 function Item(props) {
 
@@ -69,7 +70,12 @@ function Item(props) {
         setButton(<Button handleClick={handleSell} text="Sell"/>)
       }
     } else if (props.role == "discover"){
-      setButton(<Button handleClick={handleBuy} text="Buy"/>)
+      //check who's the original owner is
+      const originalOwner = await opend.getOriginalOwner(props.id)
+      //if you're not the owner of that NFT, you can Buy it
+      if (originalOwner != CURRENT_USER_ID.toText()){
+        setButton(<Button handleClick={handleBuy} text="Buy"/>)
+      }
     }
   }
 
@@ -121,7 +127,7 @@ function Item(props) {
   async function handleBuy() {
     console.log("Buy is triggered")
   }
-  
+
   return (
     <div className="disGrid-item">
       <div className="disPaper-root disCard-root makeStyles-root-17 disPaper-elevation1 disPaper-rounded">
