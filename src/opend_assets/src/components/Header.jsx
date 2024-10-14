@@ -16,7 +16,9 @@ function Header() {
     console.log(userNFTIds)
     setuserOwnedGallery(<Gallery title="My NFTs" ids={userNFTIds}/>)
 
-    const listedNFTIds  //call the function from opend
+    const listedNFTIds  = await opend.getListedNFTs()
+    console.log("listedNFTIds:", listedNFTIds)
+    setListingGallery(<Gallery title="Discover"ids={listedNFTIds}/>)
   }
   //call it when the page loads
   useEffect(()=> {
