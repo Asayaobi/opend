@@ -7,6 +7,7 @@ import {Principal} from "@dfinity/principal"
 import Button from "./Button"
 import { opend } from "../../../declarations/opend"
 import CURRENT_USER_ID from "../index"
+import PriceLabel from "./PriceLabel"
 
 function Item(props) {
 
@@ -145,6 +146,8 @@ function Item(props) {
         <div></div>
       </div>
         <div className="disCardContent-root">
+        {/* price */}
+        <PriceLabel />
         {/* name */}
           <h2 className="disTypography-root makeStyles-bodyText-24 disTypography-h5 disTypography-gutterBottom">
             {name}<span className="purple-text"> {sellStatus}</span>
