@@ -8,12 +8,15 @@ import { opend } from "../../../declarations/opend"
 import CURRENT_USER_ID from "../index"
 
 function Header() {
-  const[userOwnedGallery, setuserOwnedGallery] = useState()
+  const [userOwnedGallery, setuserOwnedGallery] = useState()
+  const [listingGallery,setListingGallery] = useState()
   //get data from the backend
   async function getNFTs(){
     const userNFTIds = await opend.getOwnedNFTs(CURRENT_USER_ID)
     console.log(userNFTIds)
     setuserOwnedGallery(<Gallery title="My NFTs" ids={userNFTIds}/>)
+
+    const listedNFTIds  //call the function from opend
   }
   //call it when the page loads
   useEffect(()=> {
@@ -52,7 +55,7 @@ function Header() {
       </Route>
 
       <Route path="/discover">
-        <h1>Discover</h1>
+        {listingGallery}
       </Route>
 
       <Route path="/minter">
