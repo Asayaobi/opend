@@ -52,20 +52,25 @@ function Item(props) {
     )
     setImage(image)
 
-    //check if NFT is listed in the ListingMap
-    console.log("props.id:", props.id, typeof props.id)
-    const nftIsListed = await opend.isListed(props.id)
-    //if it's listed ->  nftIsListed : true
-    if (nftIsListed){
-      //if it's listed, blur the image and set the owner to OpenD market 
-      setOwner("OpenD")
-      setBlur({filter: "blur(4px)"})
-      setSellStatus("Listed")
-    } else {
-      //if it's not listed, then you can sell
-      setButton(<Button handleClick={handleSell} text="Sell"/>)
+  
+    //if the props.role is for collection page or for discover page
+    if (props.role == "collection") {
+        //check if NFT is listed in the ListingMap
+      console.log("props.id:", props.id, typeof props.id)
+      const nftIsListed = await opend.isListed(props.id)
+      //if it's listed ->  nftIsListed : true
+      if (nftIsListed){
+        //if it's listed, blur the image and set the owner to OpenD market 
+        setOwner("OpenD")
+        setBlur({filter: "blur(4px)"})
+        setSellStatus("Listed")
+      } else {
+        //if it's not listed, then you can sell
+        setButton(<Button handleClick={handleSell} text="Sell"/>)
+      }
+    } else if (props.role == "discover"){
+      setButton(<Button handleClick={handleBuy} text="Buy"/>)
     }
-    
   }
 
   //call loadNFT function once when the page loads
@@ -112,6 +117,11 @@ function Item(props) {
       }
     }
   }
+
+  async function handleBuy() {
+    console.log("Buy is triggered")
+  }
+  
   return (
     <div className="disGrid-item">
       <div className="disPaper-root disCard-root makeStyles-root-17 disPaper-elevation1 disPaper-rounded">
