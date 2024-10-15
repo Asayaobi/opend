@@ -120,4 +120,38 @@ var mapOfListings = HashMap.HashMap<Principal, Listing>(1, Principal.equal, Prin
         };
         return listing.itemPrice;
     };
+
+    //for transfer ownership in handleBuy() in Item component
+    public shared(msg) func completePurchase(id: Principal, ownerId: Principal, newOwnerId: Principal) : async Text {
+        //get that purchased NFT from mapOfNFTs
+        var purchasedNFT : NFTActorClass.NFT = switch (mapOfNFTs.get(id)) {
+            case null return "NFT does not exist";
+            case (?result) result;
+        };
+
+        //transfer the owner to the buyer -> transferOwnership()from nft.mo
+        let transferResult = await purchasedNFT.transferOwnership(newOwnerId);
+        if(transferResult == "Success"){
+            //when NFT's sold, delete it from listings for sell -> mapOfListings
+            mapOfListings.delete(id);
+            //and remove it from its previous owner -> mapOfOwners
+            var ownedNFTs : List.List<Principal> = switch (mapOfOwners.get(ownerId)){
+                //if it's null, return empty list
+                case null List.nil<Principal>();
+                case (?result) result;
+            };
+            //add new item in a new list -> loop through ownedNFTs and check if this id matches the NFT id
+            //return true -> add to a new list
+            ownedNFTs := List.filter(ownedNFTs, func (listItemId: Principal) : Bool {
+                //return when the listItemId is not the NFT id
+               return listItemId != id; 
+            });
+
+            //add to ownership map of the new owner -> addToOwnershipMap()
+            addToOwnershipMap(newOwnerId, id);
+            return "Success";
+        } else {
+            return "Error";
+        }
+    };
 };
