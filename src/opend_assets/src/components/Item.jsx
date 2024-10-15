@@ -132,6 +132,7 @@ function Item(props) {
 
   async function handleBuy() {
     console.log("Buy is triggered")
+    setLoaderHidden(false)
     const tokenActor = await Actor.createActor(tokenIdlFactory, {
       agent,
       canisterId: Principal.fromText("rdmx6-jaaaa-aaaaa-aaadq-cai"),
@@ -149,6 +150,7 @@ function Item(props) {
       //transfer ownership
       const transferResult = await opend.completePurchase(props.id, sellerId, CURRENT_USER_ID)
       console.log("purchase:", transferResult)
+      setLoaderHidden(true)
     }
   }
 
