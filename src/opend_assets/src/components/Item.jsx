@@ -144,6 +144,12 @@ function Item(props) {
     //3. make the transfer
     const result = await tokenActor.transfer(sellerId, itemPrice)
     console.log("transfer result:", result)
+    //4. if the transfer is succesful, transfer the ownership
+    if (result == 'Success'){
+      //transfer ownership
+      const transferResult = await opend.completePurchase(props.id, sellerId, CURRENT_USER_ID)
+      console.log("purchase:", transferResult)
+    }
   }
 
   return (
