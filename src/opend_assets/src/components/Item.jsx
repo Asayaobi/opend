@@ -136,6 +136,14 @@ function Item(props) {
       agent,
       canisterId: Principal.fromText("rdmx6-jaaaa-aaaaa-aaadq-cai"),
     })
+
+    //1. get a hold of the seller id
+    const sellerId = await opend.getOriginalOwner(props.id)
+    //2. know how much to transfer
+    const itemPrice = await opend.getListedNFTPrice(props.id)
+    //3. make the transfer
+    const result = await tokenActor.transfer(sellerId, itemPrice)
+    console.log("transfer result:", result)
   }
 
   return (
