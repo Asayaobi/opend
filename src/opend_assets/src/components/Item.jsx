@@ -132,10 +132,10 @@ function Item(props) {
 
   async function handleBuy() {
     console.log("Buy is triggered")
-    // const tokenActor = await Actor.createActor(tokenIdlFactory, {
-    //   agent,
-    //   canisterId://from token
-    // })
+    const tokenActor = await Actor.createActor(tokenIdlFactory, {
+      agent,
+      canisterId: Principal.fromText("rdmx6-jaaaa-aaaaa-aaadq-cai"),
+    })
   }
 
   return (
