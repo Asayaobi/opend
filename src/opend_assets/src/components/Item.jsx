@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react"
-// import logo from "../../assets/logo.png"
 import { Actor, HttpAgent } from "@dfinity/agent"
 import {idlFactory} from "../../../declarations/nft"
-import { canisterId, createActor } from "../../../declarations/nft/index"
+import { idlFactory as tokenIdlFactory} from "../../../declarations/token"
+// import { canisterId, createActor } from "../../../declarations/nft/index"
 import {Principal} from "@dfinity/principal"
 import Button from "./Button"
 import { opend } from "../../../declarations/opend"
 import CURRENT_USER_ID from "../index"
 import PriceLabel from "./PriceLabel"
+import { canisterId } from "../../../declarations/nft/index"
 
 function Item(props) {
 
@@ -131,6 +132,10 @@ function Item(props) {
 
   async function handleBuy() {
     console.log("Buy is triggered")
+    // const tokenActor = await Actor.createActor(tokenIdlFactory, {
+    //   agent,
+    //   canisterId://from token
+    // })
   }
 
   return (
